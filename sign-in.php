@@ -1,9 +1,5 @@
 
 <?php 
-session_start();
-$_SESSION["location"] = "login";
-
-
 include ('server.php');?>
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
