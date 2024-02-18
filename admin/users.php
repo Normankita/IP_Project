@@ -1,7 +1,10 @@
 <?php
-session_start();
-$_SESSION["users"] = "users";
+  session_start(); 
 
+  if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: ../sign-in.php');
+  } 
 ?>
 
 
@@ -84,8 +87,7 @@ $_SESSION["users"] = "users";
             </ul>
             <ul class="nav flex-column mb-auto">
                 <li class="nav-item">
-                        <img src="../img/admin-svg/settings.svg" alt="">
-                        <a href="../index.php?logout='1'"><span style="color: #4B5563;"> Logout</span></a>
+                        <img src="../img/admin-svg/settings.svg" alt=""><a href="../index.php?logout='1'"><span style="color: #4B5563;"> Logout</span></a>
                     </a>
                 </li>
             </ul>
@@ -168,7 +170,7 @@ $_SESSION["users"] = "users";
                 if(mysqli_num_rows($result)>0){
                    while($row = mysqli_fetch_array($result)){
                         echo '<tr>';
-                        echo '<td><img class="rounded float-left" src="'.$row['display'].'" alt="" width="70" height="70"></td>';
+                        echo '<td><img class="rounded float-left" src="../img/dp/'.$row['display'].'" alt="" width="70" height="70"></td>';
                         echo '<td>'.$row['username'].'</td>';
                         echo '<td>'.$row['email'].'</td>';
                         echo '<td>'.$row['usertype'].'</td>';

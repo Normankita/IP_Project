@@ -85,8 +85,9 @@
 
 
                             <button style="background-color: #009F7F; color: #fff;" class="btn w-100 py-2"
-                                type="submit" name="reg_user" >Register new User</button>
+                                type="submit" name="reg_user" >Register As shop owner</button>
                             <br><br>
+                            <span>already have an account? <a href="sign-in.php">Sign in</a></span>
                     </div>
                 </div>
             </div>

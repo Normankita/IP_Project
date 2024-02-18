@@ -10,15 +10,6 @@
         unset($_SESSION['username']);
         header("location: sign-in.php");
   }
- 
-    if(isset($_SESSION["location"])){
-      unset($_SESSION["location"]);
-      header("location: sign-in.php");
-    }
-   elseif (isset($_SESSION["users"])) {
-    unset($_SESSION["users"]);
-     header("location: admin/users.php");
-    } 
 ?>
 <!DOCTYPE html>
 <html>

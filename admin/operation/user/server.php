@@ -31,7 +31,7 @@ if (isset($_POST['reg_user'])) {
 
 $filename = $_FILES["uploadfile"]["name"];
     $tempname = $_FILES["uploadfile"]["tmp_name"];
-    $folder = "../img/dp/" . $filename;
+    $folder = "../../../img/dp/" . $filename;
     // moving the uploaded image into the folder: img    
     if (move_uploaded_file($tempname, $folder)) {
         echo "<h3>  Image uploaded successfully!</h3>";
@@ -71,7 +71,7 @@ if($stmt = mysqli_prepare($link, $sql)){
     
   // Set parameters
   $param_name = $username;
-  $param_display = $folder;
+  $param_display = $filename;
   $param_email = $email;
   $param_usertype = $usertype;
   $param_userpassword=$password;

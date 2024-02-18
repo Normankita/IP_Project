@@ -1,3 +1,11 @@
+<?php
+  session_start(); 
+
+  if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: ../sign-in.php');
+  } 
+?>
 <!DOCTYPE html>
 <html>
 
@@ -5,7 +13,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Product</title>
+    <title>Products</title>
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/style.css">
 
@@ -21,68 +29,7 @@
 <body>
     <div class="wrapper">
         <nav id="sidebar">
-            <div class="sidebar-header">
-                <h2 style="color: #181F6A; font-weight: bold; padding-top: 20px;">Multi<span
-                    style="color: #009F7F;">Vendor</span></h2>
-                <!-- <button type="button" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                <button type="button" id="sidebarCollapse2" class="btn btn-info">
-                    <i class="fas fa-align-left"></i>
-                </button> -->
-            </div>
-
-            <ul class="list-unstyled components">
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
-                        <img src="../img/admin-svg/dashboard.svg" alt="">
-
-                        <span style="color: #4B5563;"> Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="shops.html">
-                        <img src="../img/admin-svg/shop.svg" alt="">
-                        <span style="color: #4B5563;"> Shops</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
-                        <img src="../img/admin-svg/shops.svg" alt="">
-
-                        <span style="color: #4B5563;"> My Shops</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
-                        <img src="../img/admin-svg/products.svg" alt="">
-
-                        <span style="color: #4B5563;"> Products</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="category.php">
-                        <img src="../img/admin-svg/category.svg" alt="">
-
-                        <span style="color: #4B5563;"> Categories</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="users.php">
-                        <img src="../img/admin-svg/users.svg" alt="">
-
-                        <span style="color: #4B5563;"> Users</span>
-                    </a>
-                </li>
-            </ul>
-            <ul class="nav flex-column mb-auto">
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="../sign-in.html">
-                        <img src="../img/admin-svg/settings.svg" alt="">
-                        <a href="../index.php?logout='1'"><span style="color: #4B5563;"> Logout</span></a>
-                    </a>
-                </li>
-            </ul>
+       <?=include('sidenav.php');?>
         </nav>
 
         <!-- Page Content  -->

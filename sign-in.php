@@ -29,7 +29,6 @@ include ('server.php');?>
               <h2 class="text-center" style="color: #181F6A; font-weight: bold; padding-top: 20px;">Multi<span style="color: #009F7F;">Vendor</span></h2> <br>
               <h1 class="h3 mb-3 fw-normal">Login</h1>            
               <div class="form-floating">
-              <?php include ("errors.php");?>
                 <input type="email" id="username" class="form-control" id="floatingInput" placeholder="name@example.com" name="username"
                   required>
                 <label for="floatingInput">Email address</label>
@@ -44,7 +43,7 @@ include ('server.php');?>
                   Enter valid password
                 </div>
               </div>
-
+              <?php include ("errors.php");?>
               <div class="form-check text-start my-3">
                 <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">

@@ -10,6 +10,11 @@ $Cat_Name_err = $Details_err = $icon_err = $Cat_group_err ="";
 $Prod_Name = $Details = $image = $prod_group = "";
 $Prod_Name_err = $Details_err = $image_err = $prod_group_err= "";
 
+
+// Define variables and initialize with empty values for products
+$Shop_Name = $Details = $logo = $shop_group = "";
+$Shop_Name_err = $Details_err = $logo_err = $shop_group_err= "";
+
  
 // Processing form data when form is submitted for Category
 if(isset($_POST["category_ID"]) && !empty($_POST["category_ID"])){
@@ -169,6 +174,89 @@ elseif(isset($_POST["product_ID"]) && !empty($_POST["product_ID"])){
     mysqli_close($link);
 } 
 
+//the part for shop begins here 
+
+// Processing form data when form is submitted for Products
+elseif(isset($_POST["shop_ID"]) && !empty($_POST["shop_ID"])){
+    // Get hidden input value
+    $shop_ID = $_POST["shop_ID"];
+    
+    // Validate Cat_Name
+    $input_name = trim($_POST["Shop_Name"]);
+    if(empty($input_name)){
+        $Shop_Name_err ="Please enter Product name.";
+    } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+        $Shop_Name_err = "Please enter a valid Product Name.";
+    } else{
+        $Shop_Name = $input_name;
+    }
+
+    //Validate category group
+    $input_shop_group = trim($_POST["shop_group"]);
+    if(empty($input_shop_group)){
+        $shop_group_err = "Please enter a Product group.";
+    } elseif(!filter_var($input_prod_group, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+        $shop_group_err = "Please enter a valid Product Group name.";
+    } else{
+        $shop_group = $input_prod_group;
+    }
+    
+    // Validate Details
+    $input_details = trim($_POST["Details"]);
+    if(empty($input_details)){
+        $Details_err = "Please enter details";     
+    } elseif(!filter_var($input_details, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+        $Details_err = "Please enter valid Product Details.";}
+     else{
+        $Details = $input_details;
+    }
+    
+    // Validate icon
+    $input_logo = trim($_POST["logo"]);
+    if(empty($logo_image)){
+        $logo_err = "Please upload the logo";     
+    } else{
+        $logo = $input_logo;
+    }
+    
+    // Check input errors before inserting in database
+    if(empty($Shop_Name_err) && empty($Details_err) && empty($shop_group_err) &&empty($logo_err)){
+        // Prepare an update statement
+        $sql = "UPDATE shops SET shop_name=?, Details=?, logo=?, shop_loc=? WHERE show_ID=?";   
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "ssssi", $param_name, $param_Details, $param_image,$param_group, $param_id);
+            
+            // Set parameters
+            $param_name = $Shop_Name;
+            $param_Details = $Details;
+            $param_image = $logo;
+            $param_id = $shop_ID;
+            $param_group = $shop_group;
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Records updated successfully. Redirect to landing page
+                header("location: ../products.php");
+                exit();
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+        }
+         
+        // Close statement
+        mysqli_stmt_close($stmt);
+    }
+
+    
+    // Close connection
+    mysqli_close($link);
+} 
+// ends here 
+
+
+
+
     // Check existence of category_ID parameter before processing further
     elseif(isset($_GET["category_ID"]) && !empty(trim($_GET["category_ID"]))){
         // Get URL parameter
@@ -263,7 +351,53 @@ elseif(isset($_POST["product_ID"]) && !empty($_POST["product_ID"])){
     }
     
     
+     // Check existence of product_ID parameter before processing further
+     elseif(isset($_GET["shop_ID"]) && !empty(trim($_GET["shop_ID"]))){
+        // Get URL parameter
+        $product_ID = trim($_GET["shop_ID"]);
+        
+        // Prepare a select statement
+        $sql = "SELECT * FROM shops WHERE shop_ID = ?";
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "i", $param_id);
+            
+            // Set parameters
+            $param_id = $shop_ID;
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                $result = mysqli_stmt_get_result($stmt);
     
+                if(mysqli_num_rows($result) == 1){
+                    /* Fetch result row as an associative array. Since the result set
+                    contains only one row, we don't need to use while loop */
+                    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                    
+                    // Retrieve individual field value
+                    $Shop_Name = $row["shop_name"];
+                    $Details = $row["owner_ID"];
+                    $logo = $row["logo"];
+                    $shop_group = $row['shop_loc'];
+                } else{
+                    // URL doesn't contain valid category_ID. Redirect to error page
+                    header("location: error.php");
+                    exit();
+                }
+                
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+        }
+        
+        // Close statement
+        mysqli_stmt_close($stmt);
+        
+        // Close connection
+        mysqli_close($link);
+    }
+    
+
     
     else{
         // URL doesn't contain category_ID parameter. Redirect to error page
@@ -319,6 +453,31 @@ elseif(isset($_POST["product_ID"]) && !empty($_POST["product_ID"])){
         $sendisp = "icon";
         $senid ="category_ID";
         $href = "../category.php";
+    }
+
+
+    elseif(isset($_GET["shop_ID"])){
+        //variable for displaing name 
+        $dispname =  "Shops";
+        $dispi = "logo";
+
+        // variables for error messages
+        $name_err = $Shop_Name_err;
+        $group_err = $shop_group_err;
+        $disp_err = $logo_err;
+
+        //variables fro diplaying input
+        $itemName = $Shop_Name;
+        $disp = $logo;
+        $group= $shop_group;
+        $id= $shop_ID;
+
+        //send to post php
+        $senname = "Shop_Name";
+        $sengroup = "shop_group";
+        $sendisp = "logo";
+        $senid ="shop_ID";
+        $href = "../shops.php";
     }
     
 

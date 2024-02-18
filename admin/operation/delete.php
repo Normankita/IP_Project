@@ -115,6 +115,47 @@ elseif(isset($_POST["user_ID"]) && !empty($_POST["user_ID"])){
 }
 
 
+
+//for shops starts here
+elseif(isset($_POST["shop_ID"]) && !empty($_POST["shop_ID"])){
+    // Include config file
+    require_once "config.php";
+
+    //reset variables 
+
+    $senname = "shop_ID";
+    $surename = "Shop";
+    $href="../shops.php";
+    
+    // Prepare a delete statement
+    $sql = "DELETE FROM shops WHERE shop_ID = ?";
+    
+    if($stmt = mysqli_prepare($link, $sql)){
+        // Bind variables to the prepared statement as parameters
+        mysqli_stmt_bind_param($stmt, "i", $param_id);
+        
+        // Set parameters
+        $param_id = trim($_POST["shop_ID"]);
+        
+        // Attempt to execute the prepared statement
+        if(mysqli_stmt_execute($stmt)){
+            // Records deleted successfully. Redirect to landing page
+            header("location: ../shops.php");
+            exit();
+        } else{
+            echo "Oops! Something went wrong. couldn't delete, Please try again later.";
+        }
+    }
+     
+    // Close statement
+    mysqli_stmt_close($stmt);
+    
+    // Close connection
+    mysqli_close($link);
+}
+
+
+
 elseif(isset($_GET["category_ID"])){
     $senname = "category_ID";
     $surename = "category";
@@ -130,10 +171,15 @@ elseif(isset($_GET["user_ID"])){
     $surename = "user";
     $href="../users.php";
 }
+elseif(isset($_GET["shop_ID"])){
+    $senname = "shop_ID";
+    $surename = "shop";
+    $href="../shops.php";
+}
 
 else{
     // Check existence of id parameter
-    if(empty(trim($_GET["category_ID"])) && empty(trim($_GET["product_ID"]))&& empty(trim($_GET["user_ID"]))){
+    if(empty(trim($_GET["category_ID"])) && empty(trim($_GET["product_ID"]))&& empty(trim($_GET["user_ID"]))&& empty(trim($_GET["shop_ID"]))){
         // URL doesn't contain id parameter. Redirect to error page
         header("location: error.php");
         exit();

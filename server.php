@@ -1,6 +1,6 @@
 <?php
 session_start();
-include ('config.php');
+include ('admin/operation/config.php');
 // initializing variables
 $username = "";
 $email    = "";
@@ -31,8 +31,8 @@ if (isset($_POST['reg_user'])) {
 
 $filename = $_FILES["uploadfile"]["name"];
     $tempname = $_FILES["uploadfile"]["tmp_name"];
-    $folder = "../img/dp/" . $filename;
-    // moving the uploaded image into the folder: img    
+    $folder = "img/dp/" . $filename;
+    // moving the uploaded image into the folder: dp    
     if (move_uploaded_file($tempname, $folder)) {
         echo "<h3>  Image uploaded successfully!</h3>";
     }
@@ -71,7 +71,7 @@ if($stmt = mysqli_prepare($link, $sql)){
     
   // Set parameters
   $param_name = $username;
-  $param_display = $folder;
+  $param_display = $filename;
   $param_email = $email;
   $param_usertype = $usertype;
   $param_userpassword=$password;
@@ -94,30 +94,33 @@ if($stmt = mysqli_prepare($link, $sql)){
   
 }
 
+    
 // LOGIN USER
 if (isset($_POST['login_user'])) {
-    $username = mysqli_real_escape_string($link, $_POST['username']);
-    $password = mysqli_real_escape_string($link, $_POST['password']);
-  
-    if (empty($username)) {
-          array_push($errors, "Username is required");
-    }
-    if (empty($password)) {
-          array_push($errors, "Password is required");
-    }
-  
-    if (count($errors) == 0) {
-          $password = md5($password);//encrypts to check 
-          $query = "SELECT * FROM Users WHERE username='$username' AND userpassword='$password'";
-          $results = mysqli_query($link, $query);
-          if (mysqli_num_rows($results) == 1) {
-            $_SESSION['username'] = $username;
-            $_SESSION['success'] = "You are now logged in";
-            header('location: admin/category.php');
-          }else {
-                  array_push($errors, "Wrong username/password combination");
-          }
-    }
+  $username = mysqli_real_escape_string($db, $_POST['username']);
+  $password = mysqli_real_escape_string($db, $_POST['password']);
+
+  if (empty($username)) {
+        array_push($errors, "Username is required");
   }
+  if (empty($password)) {
+        array_push($errors, "Password is required");
+  }
+else{
+  // if (count($errors) == 0) {
+        $password = md5($password);
+        $query = "SELECT * FROM Users WHERE email='$username' AND password='$password'";
+        $results = mysqli_query($link, $query);
+        if (mysqli_num_rows($results) == 1) {
+          $_SESSION['username'] = $username;
+          $_SESSION['success'] = "You are now logged in";
+          header('location: shops.html');
+        }else {
+                array_push($errors, "Wrong username/password combination");
+        }
+      }
+  
+}
+  
   
   ?>
