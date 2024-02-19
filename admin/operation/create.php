@@ -299,7 +299,7 @@ else{
                             <?php
                              if(isset($_GET['category'])){
                                 echo'<label>'.$dispname.' group</label>
-                                <input type="text" name="Cat_group" class="form-control '.(!empty($group_err)) ? 'is-invalid' : ''.'" value="'.$group.'">
+                                <input type="text" name="Cat_group" class="form-control" value="'.$group.'">
                                     <span class="invalid-feedback">'. $group_err.'</span>';
                             }
                             if(isset($_GET['product'])){
