@@ -19,14 +19,13 @@ if(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["Cat_Name"]))){
 
  // variables for error messages
  $name_err = $Cat_Name_err;
- $group_err = $Cat_group_err;
+ $group_err = $cat_group_err;
  $disp_err = $icon_err;
 
  //variables fro diplaying input
  $itemName = $Cat_Name;
  $disp = $icon;
  $group= $cat_group;
- $id= $category_ID;
 
  //send to post php
  $senname = "Cat_Name";
@@ -125,7 +124,6 @@ elseif(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["Prod_Name"]))){
  $itemName = $Prod_Name;
  $disp = $image;
  $group= $prod_group;
- $id = $product_ID;
 
  //send to post php
  $senname = "Prod_Name";
@@ -240,14 +238,13 @@ elseif(isset($_GET["category"])){
 
     // variables for error messages
     $name_err = $Cat_Name_err;
-    $group_err = $Cat_group_err;
+    $group_err = $cat_group_err;
     $disp_err = $icon_err;
 
     //variables fro diplaying input
     $itemName = $Cat_Name;
     $disp = $icon;
     $group= $cat_group;
-    $id= $category_ID;
 
     //send to post php
     $senname = "Cat_Name";
@@ -300,6 +297,11 @@ else{
                         </div>
                         <div class="form-group">
                             <?php
+                             if(isset($_GET['category'])){
+                                echo'<label>'.$dispname.' group</label>
+                                <input type="text" name="Cat_group" class="form-control '.(!empty($group_err)) ? 'is-invalid' : ''.'" value="'.$group.'">
+                                    <span class="invalid-feedback">'. $group_err.'</span>';
+                            }
                             if(isset($_GET['product'])){
                                 $sql = "SELECT * FROM categories";
                                 if($result = mysqli_query($link, $sql)){
@@ -314,11 +316,6 @@ else{
                                         
                                     }
                                }
-                            }
-                            else{
-                                echo'<label>'.$dispname.' group</label>
-                                <input type="text" name="'.$sengroup.'" class="form-control '.(!empty($group_err)) ? 'is-invalid' : ''.'" value="'.$group.'">
-                                    <span class="invalid-feedback">'. $group_err.'</span>';
                             }
                             ?>
                         </div>

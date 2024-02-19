@@ -157,25 +157,21 @@ elseif(isset($_POST["shop_ID"]) && !empty($_POST["shop_ID"])){
 
 
 elseif(isset($_GET["category_ID"])){
-    $val= trim($_GET["category_ID"]);
     $senname = "category_ID";
     $surename = "category";
     $href="../category.php";
 }
 elseif(isset($_GET["product_ID"])){
-    $val=trim($_GET["product_ID"]);
     $senname = "product_ID";
     $surename = "product";
     $href="../products.php";
 }
 elseif(isset($_GET["user_ID"])){
-    $val = trim($_GET["user_ID"]);
     $senname = "user_ID";
     $surename = "user";
     $href="../users.php";
 }
 elseif(isset($_GET["shop_ID"])){
-    $val = trim($_GET["shop_ID"]);
     $senname = "shop_ID";
     $surename = "shop";
     $href="../shops.php";
@@ -213,9 +209,17 @@ else{
                     <h2 class="mt-5 mb-3">Delete Record</h2>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="alert alert-danger">
-                            <input type="hidden" name="<?php echo $senname; ?>" value="<?php 
-                            echo trim($_GET["category_ID"]); echo trim($_GET["product_ID"]); echo trim($_GET["user_ID"]); echo trim($_GET['shop_ID']);
-                            ?>"/>
+                            <?php
+                            if(isset($_GET['product_ID'])){
+                                echo '<input type="hidden" name="'.$senname.'" value="'.trim($_GET["product_ID"]).'"/>';
+                            }
+                            if(isset($_GET['category_ID'])){
+                                echo '<input type="hidden" name="'.$senname.'" value="'.trim($_GET["category_ID"]).'"/>';
+                            }
+                            if(isset($_GET['user_ID'])){
+                                echo '<input type="hidden" name="'.$senname.'" value="'.trim($_GET["user_ID"]).'"/>';
+                            }
+                            ?>
                             <p>Are you sure you want to delete this <?php echo $surename; ?>?</p>
                             <p>
                                 <input type="submit" value="Yes" class="btn btn-danger">
