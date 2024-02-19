@@ -147,7 +147,7 @@ elseif(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["Prod_Name"]))){
      }
  
      //Validate category group
-     $input_prod_group = trim($_POST["prod_group"]);
+     $input_prod_group = $_POST["prod_group"];
      if(empty($input_prod_group)){
          $prod_group_err = "Please enter a Product group.";
      } elseif(!filter_var($input_prod_group, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
@@ -299,9 +299,28 @@ else{
                             <span class="invalid-feedback"><?php echo $disp_err;?></span>
                         </div>
                         <div class="form-group">
-                            <label><?php echo $dispname;?> group</label>
-                            <input type="text" name="<?php echo $sengroup ?>" class="form-control <?php echo (!empty($group_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $group; ?>">
-                            <span class="invalid-feedback"><?php echo $group_err;?></span>
+                            <?php
+                            if(isset($_GET['product'])){
+                                $sql = "SELECT * FROM categories";
+                                if($result = mysqli_query($link, $sql)){
+                                    if(mysqli_num_rows($result)>0){
+                                        echo ' <label for="category">'.$dispname.' Category</label>
+                                        <select class="form-control" id="prod_group" name="'.$sengroup.'">
+                                        ';
+                                        while($row = mysqli_fetch_array($result)){
+                                            echo' <option value ='.$row['Cat_Name'].'" >'.$row['Cat_Name'].'</option>';
+                                        }
+                                        echo '</option>';
+                                        
+                                    }
+                               }
+                            }
+                            else{
+                                echo'<label>'.$dispname.' group</label>
+                                <input type="text" name="'.$sengroup.'" class="form-control '.(!empty($group_err)) ? 'is-invalid' : ''.'" value="'.$group.'">
+                                    <span class="invalid-feedback">'. $group_err.'</span>';
+                            }
+                            ?>
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <a href="<?php echo $href ?>" class="btn btn-secondary ml-2">Cancel</a>
