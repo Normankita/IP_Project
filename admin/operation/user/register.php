@@ -22,7 +22,7 @@
                        
 
                         <form class="needs-validation" id="registrationForm" action="register.php" method ="post" enctype="multipart/form-data" novalidate>
-                            <?php include ('errors.php');?>
+                            <?php include ('../../../errors.php');?>
                             <div class="form-floating">
                                 <input type="text" id="username" class="form-control" value ="<?php echo $username; ?>" name ="username" required>
                                 <label for="floatingInput">Username</label>

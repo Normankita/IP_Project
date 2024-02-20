@@ -120,7 +120,7 @@
                                 echo "<td>".$row['product_ID']."</td>";
                                 echo "<td>".$row['Prod_Name']."</td>";
                                 echo "<td>".$row['Details']."</td>";
-                                echo "<td><img class='rounded floeat-left' src= '".$row['image']."' alt='' width='70' height='70'></td>";
+                                echo "<td><img class='rounded floeat-left' src= '../img/furniture/".$row['image']."' alt='' width='70' height='70'></td>";
                                 echo "<td>".$row['prod_group']."</td>"."</td>";
                                 echo "<td>";
                                 echo '<a href="operation/read.php?product_ID='.$row['product_ID'].'"title="view Product" data-toggle="tooltip"><button type="button" class="btn btn-outline-primary">View</button></a> &nbsp';

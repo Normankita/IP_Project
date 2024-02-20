@@ -135,12 +135,15 @@ elseif(isset($_POST["product_ID"]) && !empty($_POST["product_ID"])){
         $Details = $input_details;
     }
     
-    // Validate icon
-    $input_image = trim($_POST["image"]);
-    if(empty($input_image)){
-        $image_err = "Please upload the image";     
-    } else{
-        $image = $input_image;
+    $image = $_FILES["uploadfile"]["name"];
+    $tempname = $_FILES["uploadfile"]["tmp_name"];
+    $folder = "../../img/furniture/" . $image;
+    // moving the uploaded image into the folder: img    
+    if (move_uploaded_file($tempname, $folder)) {
+        echo "<h3>  Image uploaded successfully!</h3>";
+    }
+    else {
+        $icon_err="<h3>Failed to upload image!</h3>";
     }
     
     // Check input errors before inserting in database
@@ -414,7 +417,7 @@ elseif(isset($_POST["shop_ID"]) && !empty($_POST["shop_ID"])){
     if(isset($_GET["product_ID"])){
         //variable for displaing name 
         $dispname =  "Product";
-        $dispi = "Imade";
+        $dispi = "Image";
 
         // variables for error messages
         $name_err = $Prod_Name_err;
@@ -454,7 +457,7 @@ elseif(isset($_POST["shop_ID"]) && !empty($_POST["shop_ID"])){
         //send to post php
         $senname = "Cat_Name";
         $sengroup = "Cat_group";
-        $sendisp = "icon";
+        
         $senid ="category_ID";
         $href = "../category.php";
     }
@@ -479,7 +482,7 @@ elseif(isset($_POST["shop_ID"]) && !empty($_POST["shop_ID"])){
         //send to post php
         $senname = "Shop_Name";
         $sengroup = "shop_group";
-        $sendisp = "logo";
+    
         $senid ="shop_ID";
         $href = "../shops.php";
     }

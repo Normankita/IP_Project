@@ -177,7 +177,7 @@
                         echo '<td><span class="badge text-bg-success">'.$row['userstatus'].'</span></td>';
                         echo '<td>';
                         echo '<a href="operation/user/view.php?user_ID='.$row['user_ID'].'"><button type="button" class="btn btn-outline-primary">View</button></a>';
-                        echo '<a href="operation/user/edit.php?user_ID='.$row['user_ID'].'"><button type="button" class="btn btn-outline-success">Edit</button></a>';
+                        echo '<a href="operation/user/update.php?user_ID='.$row['user_ID'].'"><button type="button" class="btn btn-outline-success">Edit</button></a>';
                         echo '<a href="operation/delete.php?user_ID='.$row['user_ID'].'><button type="button" class="btn btn-outline-danger">Delete</button></a>';
                         echo '</td>';
                         echo '</tr>';

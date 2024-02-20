@@ -27,7 +27,7 @@ if(isset($_GET["category_ID"]) && !empty(trim($_GET["category_ID"]))){
                 $name = $row["Cat_Name"];
                 $Details = $row["Details"];
                 $disp = $row["icon"];
-                $group = $row["Cat_group"];
+                $group = $row["cat_group"];
                 $thename= "Category";
                 $href = "../category.php";
 
@@ -124,7 +124,7 @@ else{
                 <div class="col-md-12">
                     <h1 class="mt-5 mb-3">View Records</h1>
                     <div class="form-group">
-                         <img src="../<?= $disp ?>" alt="icon">
+                         <img style="height: 100px; width: 200px;" src="../../img/furniture/<?= $disp ?>" alt="icon">
                     </div>
                     <div class="form-group">
                         <label>Name of the <?= $thename?> item</label>

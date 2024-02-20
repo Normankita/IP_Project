@@ -1,3 +1,11 @@
+<?php
+  session_start(); 
+
+  if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: ../sign-in.php');
+  } 
+?>
 <!DOCTYPE html>
 <html>
 
@@ -84,7 +92,7 @@
                                 
                                 echo '<tr>
                                         <td>
-                                            <img class = "rounded mx-auto " src= "../img/admin-svg/'.$row['logo'].'" alt = "" height= "50" width ="50">
+                                            <img class = "rounded mx-auto " src= "../'.$row['logo'].'" alt = "" height= "50" width ="50">
                                         </td>
                                         <td>'.$row['shop_name'].'</td>';
                                         $sql = "SELECT * FROM Users WHERE user_ID = ?";

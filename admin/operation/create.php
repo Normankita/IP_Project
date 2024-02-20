@@ -7,7 +7,7 @@ $Cat_Name = $Details = $icon = $cat_group = "";
 $Cat_Name_err = $Details_err = $icon_err=$cat_group_err = "";
 
 // Define variables and initialize with empty values for products
-$Prod_Name = $Details = $image = $prod_group = "";
+$Prod_Name = $Details = $image = $prod_group = $product_ID= "";
 $Prod_Name_err = $Details_err = $image_err = $prod_group_err= "";
  
 // Processing form data when form is submitted
@@ -161,6 +161,7 @@ elseif(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["Prod_Name"]))){
      } else{
          $prod_group = $input_prod_group;
      }
+     echo $prod_group;
      
      // Validate Details
      $input_details = trim($_POST["Details"]);
@@ -171,21 +172,21 @@ elseif(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["Prod_Name"]))){
       else{
          $Details = $input_details;
      }
-     
-         // Validate and upload icon icon
-         $image = $_FILES["uploadfile"]["name"];
-         $tempname = $_FILES["uploadfile"]["tmp_name"];
-         $folder = "../../img/furniture/" . $icon;
-         // moving the uploaded image into the folder: img    
-         if (move_uploaded_file($tempname, $folder)) {
-             echo "<h3>  Image uploaded successfully!</h3>";
-         }
-         else {
-             $image_err="<h3>Failed to upload image!</h3>";
-         }
-     
+          // Validate and upload icon icon
+          $image = $_FILES["uploadfile"]["name"];
+          $tempname = $_FILES["uploadfile"]["tmp_name"];
+          $folder = "../../img/furniture/" . $image;
+          // moving the uploaded image into the folder: img    
+          if (move_uploaded_file($tempname, $folder)) {
+              echo "<h3>  Image uploaded successfully!</h3>";
+          }
+          else {
+              $icon_err="<h3>Failed to upload image!</h3>";
+          }
+   
      // Check input errors before inserting in database
      if(empty($Prod_Name_err) && empty($Details_err) && empty($prod_group_err) &&empty($image_err)){
+        echo "why am i not ex";
          // Prepare an update statement
          $sql = "INSERT INTO products (Prod_Name, Details, image, prod_group) VALUES (?, ?, ?, ?)";
          
@@ -201,11 +202,13 @@ elseif(($_SERVER["REQUEST_METHOD"] == "POST") && (isset($_POST["Prod_Name"]))){
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
+                echo "set success";
                 // Records created successfully. Redirect to landing page
                 header("location: ../products.php");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
+                header("error.php");
             }
         }
          
@@ -322,10 +325,9 @@ else{
                                 if($result = mysqli_query($link, $sql)){
                                     if(mysqli_num_rows($result)>0){
                                         echo ' <label for="category">'.$dispname.' Category</label>
-                                        <select class="form-control" id="prod_group" name="'.$sengroup.'">
-                                        ';
+                                        <select class="form-control" id="prod_group" name="'.$sengroup.'">';
                                         while($row = mysqli_fetch_array($result)){
-                                            echo' <option value ='.$row['Cat_Name'].'" >'.$row['Cat_Name'].'</option>';
+                                            echo'<option value ="'.$row['Cat_Name'].'" >'.$row['Cat_Name'].'</option>';
                                         }
                                         echo '</option>';
                                         
