@@ -13,13 +13,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="shops.html">
+                    <a class="nav-link d-flex align-items-center gap-2" href="shops.php">
                         <img src="../img/admin-svg/shop.svg" alt="">
                         <span style="color: #4B5563;"> Shops</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <a class="nav-link d-flex align-items-center gap-2" href="../shops.php">
                         <img src="../img/admin-svg/shops.svg" alt="">
 
                         <span style="color: #4B5563;"> My Shops</span>

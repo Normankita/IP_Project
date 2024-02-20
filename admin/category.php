@@ -123,7 +123,7 @@
                                 echo "<td>".$row['category_ID']."</td>";
                                 echo "<td>".$row['Cat_Name']."</td>";
                                 echo "<td>".$row['Details']."</td>";
-                                echo "<td>"."<img src= '".$row['icon']."' alt=''>"."</td>";
+                                echo "<td>"."<img src= '../img/furniture/".$row['icon']."' alt=''>"."</td>";
                                 echo "<td>".$row['cat_group']."</td>"."</td>";
                                 echo "<td>";
                                 echo '<a href="operation/read.php?category_ID='.$row['category_ID'].'"title="view category" data-toggle="tooltip"><button type = "button" class = "btn btn-outline-primary">View</button></a>';

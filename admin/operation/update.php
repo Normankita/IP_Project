@@ -51,13 +51,17 @@ if(isset($_POST["category_ID"]) && !empty($_POST["category_ID"])){
         $Details = $input_details;
     }
     
-    // Validate icon
-    $input_icon = trim($_POST["icon"]);
-    if(empty($input_icon)){
-        $icon_err = "Please upload and icon you want to use";     
-    } else{
-        $icon = $input_icon;
-    }
+          // Validate and upload icon icon
+          $icon = $_FILES["uploadfile"]["name"];
+          $tempname = $_FILES["uploadfile"]["tmp_name"];
+          $folder = "../../img/furniture/" . $icon;
+          // moving the uploaded image into the folder: img    
+          if (move_uploaded_file($tempname, $folder)) {
+              echo "<h3>  Image uploaded successfully!</h3>";
+          }
+          else {
+              $icon_err="<h3>Failed to upload image!</h3>";
+          }
     
     // Check input errors before inserting in database
 
@@ -503,7 +507,7 @@ elseif(isset($_POST["shop_ID"]) && !empty($_POST["shop_ID"])){
                 <div class="col-md-12">
                     <h2 class="mt-5">Update <?php echo $dispname; ?> Record</h2>
                     <p>Please edit the input values and submit to update <?php echo $dispname; ?> record.</p>
-                    <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
+                    <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label><?php echo $dispname; ?> Name</label>
                             <input type="text" name="<?php echo $senname; ?>" class="form-control <?php echo (!empty($name_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $itemName; ?>">
@@ -515,10 +519,10 @@ elseif(isset($_POST["shop_ID"]) && !empty($_POST["shop_ID"])){
                             <span class="invalid-feedback"><?php echo $Details_err;?></span>
                         </div>
                         <div class="form-group">
-                            <label><?php echo $dispi ;?></label>
-                            <input type="text" name="<?php echo $sendisp ;?>" class="form-control <?php echo (!empty($disp_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $disp; ?>">
+                            <input class="form-control" id="uploadfile" type="file" name="uploadfile" value="<?= $folder ?>"  required >
+                            <label for="floatingInput"><?php echo $dispi;?></label>
                             <span class="invalid-feedback"><?php echo $disp_err;?></span>
-                        </div>
+                            </div><br>
                         <div class="form-group">
                             <label><?php echo $dispname ;?> Group</label>
                             <input type="text" name="<?php echo $sengroup ;?>" class="form-control <?php echo (!empty($group_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $group; ?>">
